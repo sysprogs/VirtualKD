@@ -26,8 +26,8 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 // KDVMDLL
 //
 
-IDR_KDVM32              KDVMDLL                 "..\\kdpatch\\Release\\kdbazis.dll"
-IDR_KDVM64              KDVMDLL                 "..\\kdpatch\\x64\\Release\\kdbazis.dll"
+IDR_KDVM32              KDVMDLL                 "..\\bundle\\target\\x86\\kdbazis.dll"
+IDR_KDVM64              KDVMDLL                 "..\\bundle\\target\\x64\\kdbazis.dll"
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
