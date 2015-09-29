@@ -363,6 +363,19 @@ public:
 	}
 };
 
+NTSTATUS __stdcall KdInitialize(int mode, PVOID lpLoaderParameterBlock, void *)
+{
+	if (mode == 0)
+		return KdDebuggerInitialize0(lpLoaderParameterBlock);
+	else
+		return STATUS_SUCCESS;		
+}
+
+NTSTATUS __stdcall KdPower(void *, void *)
+{
+	return STATUS_NOT_SUPPORTED;
+}
+
 NTSTATUS __stdcall KdDebuggerInitialize0(PVOID lpLoaderParameterBlock)
 {
 	s_bVBoxDetected = false; 

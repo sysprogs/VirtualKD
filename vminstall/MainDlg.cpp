@@ -69,6 +69,7 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 	m_ExistingEntryName = pEntry->GetDescription();
 	SetDlgItemText(IDC_REUSEENTRY, String::sFormat(_T("Use existing entry (%s)"), m_ExistingEntryName.c_str()).c_str());
 	SendDlgItemMessage(IDC_SETDEFAULT, BM_SETCHECK, BST_CHECKED);
+	SendDlgItemMessage(IDC_KDCOM, BM_SETCHECK, BST_CHECKED);
 
 	SendDlgItemMessage(bAlreadyInstalled ? IDC_REUSEENTRY : IDC_NEWENTRY, BM_SETCHECK, BST_CHECKED);
 	::EnableWindow(GetDlgItem(IDC_ENTRYNAME), !bAlreadyInstalled);
@@ -144,14 +145,19 @@ static ActionStatus SaveResourceToFile(const String &filePath, LPCTSTR lpResType
 	return MAKE_STATUS(Success);
 }
 
+ActionStatus TakeOwnership(LPTSTR lpszOwnFile);
+
 LRESULT CMainDlg::OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
-	bool createNewEntry = false, setDefault = false;
+	bool createNewEntry = false, setDefault = false, replaceKdcom = false;
 	String entryName, monitorLocation;
 	unsigned timeout = -1;
 
 	if (SendDlgItemMessage(IDC_SETDEFAULT, BM_GETCHECK) == BST_CHECKED)
 		setDefault = true, timeout = GetDlgItemInt(IDC_TIMEOUT);
+
+	if (SendDlgItemMessage(IDC_KDCOM, BM_GETCHECK) == BST_CHECKED)
+		replaceKdcom = true;
 
 	if (SendDlgItemMessage(IDC_NEWENTRY, BM_GETCHECK) == BST_CHECKED)
 	{
@@ -175,7 +181,7 @@ LRESULT CMainDlg::OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /
 #endif
 
 	{
-		String fp = Path::Combine(Path::GetSpecialDirectoryLocation(dirSystem), ConstString(_T("kdbazis.dll")));
+		String fp = Path::Combine(Path::GetSpecialDirectoryLocation(dirSystem), replaceKdcom ? ConstString(_T("kdcom.dll")) : ConstString(_T("kdbazis.dll")));
 
 #ifdef _WIN64
 		bool is64Bit = true;
@@ -187,6 +193,51 @@ LRESULT CMainDlg::OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /
 
 		{
 			WOW64FSRedirHolder holder;
+			if (replaceKdcom)
+			{
+				String kdcomBackup = Path::Combine(Path::GetSpecialDirectoryLocation(dirSystem), ConstString(_T("kdcom_old.dll")));
+				if (!File::Exists(kdcomBackup))
+				{
+					st = TakeOwnership(const_cast<LPTSTR>(String(fp).c_str()));
+					if (!st.Successful())
+					{
+						::MessageBox(HWND_DESKTOP,
+							String::sFormat(_T("Cannot replace owner on kdcom.dll: %s"), st.GetMostInformativeText().c_str()).c_str(),
+							NULL,
+							MB_ICONERROR);
+						return 0;
+					}
+
+					Win32::Security::TranslatedAcl dacl = File::GetDACLForPath(fp, &st);
+					if (!st.Successful())
+					{
+						::MessageBox(HWND_DESKTOP,
+							String::sFormat(_T("Cannot query permissions on kdcom.dll: %s"), st.GetMostInformativeText().c_str()).c_str(),
+							NULL,
+							MB_ICONERROR);
+						return 0;
+					}
+					dacl.AddAllowingAce(STANDARD_RIGHTS_ALL | SPECIFIC_RIGHTS_ALL, BazisLib::Win32::Security::Sid::CurrentUserSid());
+					st = File::SetDACLForPath(fp, dacl);
+					if (!st.Successful())
+					{
+						::MessageBox(HWND_DESKTOP,
+							String::sFormat(_T("Cannot set permissions on kdcom.dll: %s"), st.GetMostInformativeText().c_str()).c_str(),
+							NULL,
+							MB_ICONERROR);
+						return 0;
+					}
+
+					if (!MoveFile(fp.c_str(), kdcomBackup.c_str()))
+					{
+						::MessageBox(HWND_DESKTOP,
+							String::sFormat(_T("Cannot rename old kdcom.dll: %s"), MAKE_STATUS(ActionStatus::FromLastError()).GetMostInformativeText().c_str()).c_str(),
+							NULL,
+							MB_ICONERROR);
+						return 0;
+					}
+				}
+			}
 			st = SaveResourceToFile(fp, _T("KDVMDLL"), is64Bit ? IDR_KDVM64 : IDR_KDVM32);
 		}
 		if (!st.Successful())
@@ -227,7 +278,7 @@ LRESULT CMainDlg::OnOK(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /
 		}
 	}
 
-	ActionStatus st = CreateVirtualKDBootEntry(createNewEntry, setDefault, entryName.c_str(), timeout);
+	ActionStatus st = CreateVirtualKDBootEntry(createNewEntry, setDefault, entryName.c_str(), timeout, replaceKdcom);
 	if (!st.Successful())
 	{
 		::MessageBox(HWND_DESKTOP,

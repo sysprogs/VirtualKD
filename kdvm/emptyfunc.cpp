@@ -18,8 +18,8 @@ extern "C"
 	DEFINE_EMPTYFUNC1(KdRestore)
 	DEFINE_EMPTYFUNC1(KdSave)
 
-	NTSTATUS KdSetHiberRange()
+	NTSTATUS KdSetHiberRange(void *)
 	{
-		return 0x0C00000BB;	//As in KDCOM.DLL
+		return STATUS_NOT_SUPPORTED;	//As in KDCOM.DLL
 	}
 }

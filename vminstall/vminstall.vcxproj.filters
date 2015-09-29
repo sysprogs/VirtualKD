@@ -30,6 +30,9 @@
     <ClCompile Include="vminstall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TakeOwnership.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bootedit.h">
@@ -73,6 +76,7 @@
     <None Include="..\..\VisualDDK\DDKLaunchMonitor\x64\Release\DDKLaunchMonitor.exe" />
     <None Include="..\kdpatch\Release\kdvm.dll" />
     <None Include="..\kdpatch\x64\Release\kdvm.dll" />
-    <None Include="..\kdpatch\kdpatch.reg" />
+    <None Include="..\bundle\target\x86\kdbazis.dll" />
+    <None Include="..\bundle\target\x64\kdbazis.dll" />
   </ItemGroup>
 </Project>

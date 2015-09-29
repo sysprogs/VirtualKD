@@ -13,6 +13,7 @@
 #define IDC_SETDEFAULT                  1004
 #define IDC_ADDSUFFIX                   1005
 #define IDC_TIMEOUT                     1006
+#define IDC_KDCOM                       1007
 #define IDC_INFOTEXT                    1008
 #define IDC_INSTALLVDDK                 1009
 #define IDC_EDIT1                       1010

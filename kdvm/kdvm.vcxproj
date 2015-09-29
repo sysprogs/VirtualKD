@@ -3,6 +3,9 @@
   <PropertyGroup Condition="'$(SIGN_RELEASE_BINARY)' == ''">
     <SIGN_RELEASE_BINARY>$(ProjectDir)..\dummysign.bat</SIGN_RELEASE_BINARY>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TESTSIGN_BINARY)' == ''">
+    <TESTSIGN_BINARY>$(ProjectDir)..\TestSign.bat</TESTSIGN_BINARY>
+  </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -120,7 +123,7 @@
       <AdditionalLibraryDirectories>$(WDK7PATH)\lib\WXP\i386;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>$(SIGN_RELEASE_BINARY) $(TargetPath)</Command>
+      <Command>$(TESTSIGN_BINARY) $(TargetPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -158,7 +161,7 @@
       <AdditionalLibraryDirectories>$(WDK7PATH)\lib\WNET\amd64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>$(SIGN_RELEASE_BINARY) $(TargetPath)</Command>
+      <Command>$(TESTSIGN_BINARY) $(TargetPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -201,7 +204,7 @@
       <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>$(SIGN_RELEASE_BINARY) $(TargetPath)</Command>
+      <Command>$(TESTSIGN_BINARY) $(TargetPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -246,7 +249,7 @@
       <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>$(SIGN_RELEASE_BINARY) $(TargetPath)</Command>
+      <Command>$(TESTSIGN_BINARY) $(TargetPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

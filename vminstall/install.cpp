@@ -50,7 +50,7 @@ ActionStatus FindBestOSEntry(ManagedPointer<AIBootConfigurationEntry> *ppEntry, 
 	return MAKE_STATUS(Success);
 }
 
-ActionStatus CreateVirtualKDBootEntry(bool CreateNewEntry, bool SetNewEntryDefault, LPCWSTR lpEntryName, unsigned Timeout)
+ActionStatus CreateVirtualKDBootEntry(bool CreateNewEntry, bool SetNewEntryDefault, LPCWSTR lpEntryName, unsigned Timeout, bool replacingKdcom)
 {
 	ManagedPointer<AIBootConfigurationEditor> pEditor = CreateConfigurationEditor();
 	if (!pEditor)	
@@ -72,7 +72,7 @@ ActionStatus CreateVirtualKDBootEntry(bool CreateNewEntry, bool SetNewEntryDefau
 	if (!pEntry)
 		return MAKE_STATUS(NotSupported);
 
-	st = pEntry->EnableCustomKD(L"kdbazis.dll");
+	st = pEntry->EnableCustomKD(replacingKdcom ? L"kdcom.dll" : L"kdbazis.dll");
 	if (!st.Successful())
 		return COPY_STATUS(st);
 

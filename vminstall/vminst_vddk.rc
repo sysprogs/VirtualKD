@@ -26,8 +26,8 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 // VDDKMON
 //
 
-IDR_VDDKMON32           VDDKMON                 "..\\..\\VisualDDK\\DDKLaunchMonitor\\Release\\DDKLaunchMonitor.exe"
-IDR_VDDKMON64           VDDKMON                 "..\\..\\VisualDDK\\DDKLaunchMonitor\\x64\\Release\\DDKLaunchMonitor.exe"
+//IDR_VDDKMON32           VDDKMON                 "..\\..\\VisualDDK\\DDKLaunchMonitor\\Release\\DDKLaunchMonitor.exe"
+//IDR_VDDKMON64           VDDKMON                 "..\\..\\VisualDDK\\DDKLaunchMonitor\\x64\\Release\\DDKLaunchMonitor.exe"
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
