@@ -20,6 +20,17 @@ namespace VirtualBoxIntegration
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWow64Process([In] IntPtr hProcess, [Out] out bool lpSystemInfo);
 
+
+        public App()
+        {
+            this.DispatcherUnhandledException += App_DispatcherUnhandledException;
+        }
+
+        void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show(e.Exception.ToString(), "VirtualBoxIntegration", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
         public static bool Is64Bit()
         {
             try

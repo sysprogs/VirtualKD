@@ -36,6 +36,10 @@ namespace VirtualBoxIntegration
 
             _VirtualBox = new VirtualBox.VirtualBox();
             lblVersion.Content = _VirtualBox.Version;
+            if (int.Parse(_VirtualBox.Version.Split('.')[0]) < 5)
+            {
+                throw new Exception("VirtualBox older than 5.0 detected. Please install VirtualBox 5.0 or later to use this version of VirtualKD.");
+            }
 
             var is64Bit = App.Is64Bit();
             RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Oracle\VirtualBox");
