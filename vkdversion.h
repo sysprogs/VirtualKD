@@ -1,12 +1,12 @@
 #pragma once
-#define VIRTUALKD_VERSION 		 2,8,0,1
-#define VIRTUALKD_VERSION_STR 	"2.8"
+#define VIRTUALKD_VERSION 		 3,0,0,1
+#define VIRTUALKD_VERSION_STR 	"3.0"
 #define COPYRIGHT_STR			"LGPL"
 #define TRADEMARKS_STR			"VirtualKD"
 #define PRODUCTNAME_STR			"VirtualKD"
-#define COMPANY_STR				"Sysprogs UG (haftungsbeschraenkt)"
+#define COMPANY_STR				"Sysprogs OU"
 #define COMMENTS_STR			"http://virtualkd.sysprogs.org/"
-#define VIRTUALKD_VER_INT		0x02800000
+#define VIRTUALKD_VER_INT		0x03000000
 
 #define KDCLIENT_DLL_VER_STR	VIRTUALKD_VERSION_STR
 #define KDCLIENT_DLL_VER		VIRTUALKD_VERSION
@@ -20,8 +20,8 @@
 #define VMINSTALL_EXE_VER_STR	VIRTUALKD_VERSION_STR
 #define VMINSTALL_EXE_VER		VIRTUALKD_VERSION
 
-#define KERNEL_PART_VER			2,8,0,1
-#define KERNEL_PART_VER_STR		"2.8"
+#define KERNEL_PART_VER			3,0,0,1
+#define KERNEL_PART_VER_STR		"3.0"
 
 #define KDPATCH_SYS_VER_STR		KERNEL_PART_VER_STR
 #define KDPATCH_SYS_VER			KERNEL_PART_VER
