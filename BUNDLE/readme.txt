@@ -181,6 +181,8 @@ v2.7 Fixed compatibility with Windows 8
 v2.8 Fixed ASSERT() support.
 	 VirtualBox integration is now done via pluggable device manager and does not require replacing VBoxDD.DLL	 
 	 Fixed boot.ini installation bug
+	 
+v3.0 Added support for Windows 10 and VirtualBox 5.x
 	
 THANKS
 I would like to thank the following people for making the creation of this tool possible:
