@@ -1,6 +1,0 @@
-LIBRARY	"VBoxDD"
-
-EXPORTS
-    VBoxDevicesRegister
-	DllRegisterServer
-	DllUnregisterServer    
