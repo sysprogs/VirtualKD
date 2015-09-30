@@ -103,6 +103,11 @@ namespace VistaBCD
 			return MAKE_STATUS(Success);
 		}
 
+		virtual ActionStatus ExplicitlyDisableDebugging()
+		{
+			return m_Object.SetElement(BcdOSLoaderBoolean_KernelDebuggerEnabled, false);
+		}
+
 		bool Valid()
 		{
 			return m_Object.Valid() && (m_Object.GetType() == BCDObject::WindowsLoader);
@@ -291,6 +296,11 @@ namespace BootIniEditor
 		unsigned GetEntryIndex()
 		{
 			return m_EntryIndex;
+		}
+
+		virtual ActionStatus ExplicitlyDisableDebugging()
+		{
+			return MAKE_STATUS(Success);	//Not needed on XP
 		}
 	};
 

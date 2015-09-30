@@ -53,7 +53,7 @@ ActionStatus FindBestOSEntry(ManagedPointer<AIBootConfigurationEntry> *ppEntry, 
 ActionStatus CreateVirtualKDBootEntry(bool CreateNewEntry, bool SetNewEntryDefault, LPCWSTR lpEntryName, unsigned Timeout, bool replacingKdcom)
 {
 	ManagedPointer<AIBootConfigurationEditor> pEditor = CreateConfigurationEditor();
-	if (!pEditor)	
+	if (!pEditor)
 		return MAKE_STATUS(UnknownError);
 
 	bool alreadyInstalled = false;
@@ -67,7 +67,10 @@ ActionStatus CreateVirtualKDBootEntry(bool CreateNewEntry, bool SetNewEntryDefau
 		return MAKE_STATUS(NotSupported);
 
 	if (CreateNewEntry && !alreadyInstalled)
+	{
+		pEntry->ExplicitlyDisableDebugging();
 		pEntry = pEditor->CopyEntry(pEntry, true, &st);
+	}
 
 	if (!pEntry)
 		return MAKE_STATUS(NotSupported);

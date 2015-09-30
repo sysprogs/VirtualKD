@@ -25,6 +25,7 @@ namespace BootEditor
 		virtual String GetCustomKDName()=0;
 
 		virtual ActionStatus EnableCustomKD(LPCWSTR pCustomKDName)=0;
+		virtual ActionStatus ExplicitlyDisableDebugging() = 0;
 	};
 
 	class AIBootConfigurationEditor : AUTO_INTERFACE
