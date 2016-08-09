@@ -98,6 +98,9 @@ namespace VistaBCD
 				st = m_Object.SetElement(BcdLibraryBoolean_AutoRecoveryEnabled, false);
 				if (!st.Successful())
 					return st;
+				st = m_Object.SetElement(BcdLibraryInteger_DebuggerType, (ULONGLONG)0); //Set DebuggerType to DebuggerSerial
+				if (!st.Successful())
+					return st;
 			}
 
 			return MAKE_STATUS(Success);
