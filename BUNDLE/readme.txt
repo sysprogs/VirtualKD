@@ -5,7 +5,7 @@ http://virtualkd.sysprogs.org/
 Copyright (c) Ivan Shcherbakov, 2009-2012 [ivan@sysprogs.org]
 
 -===============QUICKSTART===============-
-	1. Run VirtualKDSetup.exe on host (only needed if VirtualBox is used)
+	1. Run VirtualKDSetup.exe (renamed to VirtualBoxIntegration.exe from v3.0+) on host (only needed if VirtualBox is used)
 	2. Run target\vminstall.exe on every virtual machine.
 	3. Run vmmon.exe (or vmmon64.exe) to start.
 	
